@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <_NCodePackageBase>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'ncode.projectsettings.scaffold.nuspec'))</_NCodePackageBase>
+    <_NCodeSolutionFilesDir>$([System.IO.Path]::Combine($(_NCodePackageBase), "solution"))</_NCodeSolutionFilesDir>
+    <_NCodeProjectFilesDir>$([System.IO.Path]::Combine($(_NCodePackageBase), "project"))</_NCodeProjectFilesDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      Copy all files from 'PackageBase\solution' to the solution directory
+      Copy all files from 'PackageBase\project' to the project directory
+
+      NCode.ProjectSettings.Scaffold.sln.DotSettings
+      is special gets copied using the destination's solution file name
+    -->
+
+    <_NCodeFiles Include="$(_NCodeSolutionFilesDir)\*" Condition="'$(NCodeSolutionDir)'!=''">
+      <TargetPath>$([System.IO.Path]::Combine($(NCodeSolutionDir), $([System.IO.Path]::GetFileName(%(_NCodeFiles.FullPath)))))</TargetPath>
+    </_NCodeFiles>
+
+    <_NCodeFiles Include="$([MSBuild]::GetPathOfFileAbove('NCode.ProjectSettings.Scaffold.sln.DotSettings'))" Condition="'$(NCodeSolutionPath)'!=''">
+      <TargetPath>$(NCodeSolutionPath).DotSettings</TargetPath>
+    </_NCodeFiles>
+
+    <_NCodeFiles Include="$(_NCodeProjectFilesDir)\*" Condition="'$(MSBuildProjectDirectory)'!=''">
+      <TargetPath>$([System.IO.Path]::Combine($(MSBuildProjectDirectory), $([System.IO.Path]::GetFileName(%(_NCodeFiles.FullPath)))))</TargetPath>
+    </_NCodeFiles>
+  </ItemGroup>
+
+  <Target Name="NCodeBootstrap" BeforeTargets="Compile">
+    <Message Text="NCode&gt; NCodeSolutionDir: '$(NCodeSolutionDir)'" Importance="high" />
+    <Message Text="NCode&gt; NCodeSolutionPath: '$(NCodeSolutionPath)'" Importance="high" />
+    <Message Text="NCode&gt; NCodeSolutionPathProbe: '$(NCodeSolutionPathProbe)'" Importance="high" />
+
+    <Message Text="NCode&gt; NCodePackageBase: '$(_NCodePackageBase)'" Importance="high" />
+    <Message Text="NCode&gt; NCodeSolutionFilesDir: '$(_NCodeSolutionFilesDir)'" Importance="high" />
+    <Message Text="NCode&gt; NCodeProjectFilesDir: '$(_NCodeProjectFilesDir)'" Importance="high" />
+
+    <Message Text="NCode&gt; NCodeFiles2: '@(_NCodeFiles)'" Importance="high" />
+
+    <CallTarget Targets="NCodeCopyFiles" Condition="'$(NCodeEnableCopyFiles)'=='True'" />
+  </Target>
+
+  <Target Name="NCodeCopyFiles" DependsOnTargets="NCodeResolveCopyFiles">
+    <CallTarget Targets="NCodeCopyFilesCore" Condition="'@(_NCodeCopyFiles)'!=''" />
+  </Target>
+
+  <Target Name="NCodeCopyFilesCore" DependsOnTargets="NCodeResolveCopyFiles">
+    <Message Text="NCode&gt; Copy File '%(_NCodeCopyFiles.FullPath)' to '%(_NCodeCopyFiles.TargetPath)'" Importance="high" />
+    <Copy SourceFiles="@(_NCodeCopyFiles)" DestinationFiles="%(_NCodeCopyFiles.TargetPath)" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" ContinueOnError="true" />
+  </Target>
+
+  <Target Name="NCodeResolveCopyFiles">
+    <ItemGroup>
+      <_NCodeCopyFiles Include="@(_NCodeFiles)" Condition="Exists(%(_NCodeFiles.FullPath)) and !Exists(%(_NCodeFiles.TargetPath))" />
+    </ItemGroup>
+  </Target>
+
+</Project>

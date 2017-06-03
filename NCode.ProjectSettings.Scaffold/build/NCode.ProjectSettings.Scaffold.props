@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+    Property Functions
+    https://docs.microsoft.com/en-us/visualstudio/msbuild/property-functions
+
+      $(MSBuildProjectDirectory)
+      $(MSBuildThisFileDirectory)
+
+      $([System.IO.Path]::Combine())
+      $([System.IO.Path]::GetFileName())
+      $([System.IO.Path]::GetDirectoryName())
+
+      $([MSBuild]::GetPathOfFileAbove())
+      $([MSBuild]::GetDirectoryNameOfFileAbove())
+
+    NuGet pack and restore as MSBuild targets
+    https://docs.microsoft.com/en-us/nuget/schema/msbuild-targets
+
+    Creating NuGet packages
+    https://docs.microsoft.com/en-us/nuget/create-packages/creating-a-package
+
+    .nuspec reference
+    https://docs.microsoft.com/en-us/nuget/schema/nuspec
+  -->
+
+  <!--
+    project.props
+  -->
+  <PropertyGroup>
+    <NCodeImportProjectProps Condition="'$(NCodeImportProjectProps)'==''">True</NCodeImportProjectProps>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(NCodeImportProjectProps)'=='True' and '$(NCodeProjectPropsPath)'==''">
+    <_NCodeProjectPropsFile Condition="'$(_NCodeProjectPropsFile)' == ''">project.props</_NCodeProjectPropsFile>
+    <_NCodeProjectPropsBasePath Condition="'$(_NCodeProjectPropsBasePath)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), '$(_NCodeProjectPropsFile)'))</_NCodeProjectPropsBasePath>
+    <NCodeProjectPropsPath Condition="'$(_NCodeProjectPropsBasePath)' != '' and '$(_NCodeProjectPropsFile)' != ''">$([System.IO.Path]::Combine('$(_NCodeProjectPropsBasePath)', '$(_NCodeProjectPropsFile)'))</NCodeProjectPropsPath>
+  </PropertyGroup>
+  <Import Project="$(NCodeProjectPropsPath)" Condition="'$(NCodeImportProjectProps)' == 'true' and Exists('$(NCodeProjectPropsPath)')"/>
+
+  <!--
+    Solution Path and Directory
+  -->
+  <PropertyGroup>
+    <NCodeSolutionPathProbe>$([MSBuild]::GetPathOfFileAbove($([System.IO.Path]::ChangeExtension($(MSBuildProjectFile), '.sln')), $(MSBuildProjectDirectory)))</NCodeSolutionPathProbe>
+
+    <NCodeSolutionPath Condition="'$(NCodeSolutionPath)'==''">$(SolutionPath)</NCodeSolutionPath>
+    <NCodeSolutionPath Condition="!Exists($(NCodeSolutionPath))">$(NCodeSolutionPathProbe)</NCodeSolutionPath>
+    <NCodeSolutionPath Condition="!Exists($(NCodeSolutionPath))"></NCodeSolutionPath>
+
+    <NCodeSolutionDir Condition="Exists($(NCodeSolutionPath))">$([MSBuild]::EnsureTrailingSlash($([System.IO.Path]::GetDirectoryName($(NCodeSolutionPath)))))</NCodeSolutionDir>
+    <NCodeSolutionDir Condition="!Exists($(NCodeSolutionDir))"></NCodeSolutionDir>
+  </PropertyGroup>
+
+  <!--
+    NCodeBuildYear
+    NCodeBuildTimestamp
+  -->
+  <PropertyGroup>
+    <NCodeBuildYear Condition="'$(NCodeBuildYear)'==''">$([System.DateTime]::Now.Year)</NCodeBuildYear>
+    <NCodeBuildTimestamp Condition="'$(NCodeBuildTimestamp)'==''">$([System.DateTime]::Now.ToString("u"))</NCodeBuildTimestamp>
+  </PropertyGroup>
+
+  <!--
+    SignAssembly
+    GeneratePackageOnBuild
+
+    A temporary workaround until the following is released
+    https://github.com/dotnet/sdk/issues/924
+  -->
+  <PropertyGroup>
+    <SignAssemblyFlag Condition="'$(SignAssemblyFlag)'=='' and '$(UsingMicrosoftNETSdk)'==''">True</SignAssemblyFlag>
+    <SignAssembly Condition="'$(SignAssembly)'!='$(SignAssemblyFlag)' and '$(SignAssemblyFlag)'!=''">$(SignAssemblyFlag)</SignAssembly>
+
+    <GeneratePackageOnBuildFlag Condition="'$(GeneratePackageOnBuildFlag)'=='' and '$(UsingMicrosoftNETSdk)'==''">True</GeneratePackageOnBuildFlag>
+    <GeneratePackageOnBuild Condition="'$(GeneratePackageOnBuild)'!='$(GeneratePackageOnBuildFlag)' and '$(GeneratePackageOnBuildFlag)'!=''">$(GeneratePackageOnBuildFlag)</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <!--
+    Options to Enable or Disable
+  -->
+  <PropertyGroup>
+    <NCodeIncludeLicense Condition="'$(NCodeIncludeLicense)'==''">True</NCodeIncludeLicense>
+    <NCodeIncludeCopyright Condition="'$(NCodeIncludeCopyright)'==''">True</NCodeIncludeCopyright>
+    <NCodeIncludeGlobalAssemblyInfo Condition="'$(NCodeIncludeGlobalAssemblyInfo)'==''">True</NCodeIncludeGlobalAssemblyInfo>
+    <NCodeEnableCopyFiles Condition="'$(NCodeEnableCopyFiles)'==''">True</NCodeEnableCopyFiles>
+  </PropertyGroup>
+
+  <!--
+    Overrides for GlobalAssemblyInfo
+  -->
+  <PropertyGroup>
+    <NCodeClsCompliant Condition="'$(NCodeClsCompliant)'==''">True</NCodeClsCompliant>
+    <DefineConstants Condition="'$(NCodeClsCompliant)'=='True'">$(DefineConstants);NCodeClsCompliantTrue</DefineConstants>
+    <DefineConstants Condition="'$(NCodeClsCompliant)'=='False'">$(DefineConstants);NCodeClsCompliantFalse</DefineConstants>
+
+    <DefineConstants Condition="'$(NCodeAssemblyTrademarkDisable)'=='True'">$(DefineConstants);NCodeAssemblyTrademarkDisable</DefineConstants>
+    <DefineConstants Condition="'$(NCodeAssemblyCultureDisable)'=='True'">$(DefineConstants);NCodeAssemblyCultureDisable</DefineConstants>
+
+    <NCodeComVisible Condition="'$(NCodeComVisible)'==''">False</NCodeComVisible>
+    <DefineConstants Condition="'$(NCodeComVisible)'=='True'">$(DefineConstants);NCodeComVisibleTrue</DefineConstants>
+    <DefineConstants Condition="'$(NCodeComVisible)'=='False'">$(DefineConstants);NCodeComVisibleFalse</DefineConstants>
+  </PropertyGroup>
+
+  <!--
+    Assembly Info
+  -->
+  <PropertyGroup>
+    <Title Condition="'$(Title)'==''">$(AssemblyName)</Title>
+    <Description Condition="'$(Description)'==''">$(AssemblyName)</Description>
+
+    <Version Condition="'$(Version)'==''">1.0.0</Version>
+    <FileVersion Condition="'$(FileVersion)'==''">$(Version)</FileVersion>
+    <AssemblyVersion Condition="'$(AssemblyVersion)'==''">$(Version)</AssemblyVersion>
+
+    <Authors Condition="'$(Authors)'==''">NCode Group</Authors>
+    <Company Condition="'$(Company)'==''">NCode Group</Company>
+    <Copyright Condition="'$(Copyright)'==''">Copyright © $(NCodeBuildYear) NCode Group</Copyright>
+    <NeutralLanguage Condition="'$(NeutralLanguage)'==''">en-us</NeutralLanguage>
+  </PropertyGroup>
+
+  <!--
+    Package Info
+  -->
+  <PropertyGroup Condition="'$(GeneratePackageOnBuild)'=='True'">
+    <PackageId Condition="'$(PackageId)'==''">$(AssemblyName)</PackageId>
+    <PackageVersion Condition="'$(PackageVersion)'==''">$(Version)</PackageVersion>
+
+    <PackageProjectUrl Condition="'$(PackageProjectUrl)'==''">https://github.com/NCodeGroup/$(PackageId).git</PackageProjectUrl>
+    <PackageLicenseUrl Condition="'$(PackageLicenseUrl)'=='' and '$(NCodeIncludeLicense)'=='True'">https://raw.githubusercontent.com/NCodeGroup/$(PackageId)/master/LICENSE.txt</PackageLicenseUrl>
+    <PackageIconUrl Condition="'$(PackageIconUrl)'==''">https://raw.githubusercontent.com/NCodeGroup/$(PackageId)/master/NCodeGroup.png</PackageIconUrl>
+
+    <PackageTags Condition="'$(PackageTags)'==''"></PackageTags>
+    <PackageReleaseNotes Condition="'$(PackageReleaseNotes)'==''">Built on $(NCodeBuildTimestamp)</PackageReleaseNotes>
+  </PropertyGroup>
+  <!--
+    NuspecProperties is only supported when NuspecFile is also specified
+    https://github.com/NuGet/Home/issues/4649
+  -->
+  <ItemGroup>
+    <NuspecPropertyList Include="id=$(PackageId)" />
+    <NuspecPropertyList Include="version=$(PackageVersion)" />
+    <NuspecPropertyList Include="description=$(Description)" />
+
+    <NuspecPropertyList Include="year=$(NCodeBuildYear)" />
+    <NuspecPropertyList Include="timestamp=$(NCodeBuildTimestamp)" />
+  </ItemGroup>
+  <PropertyGroup Condition="'$(NuspecFile)'!=''">
+    <NuspecProperties>$(NuspecProperties);@(NuspecPropertyList)</NuspecProperties>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(NuspecFile)'==''">
+    <NuspecProperties></NuspecProperties>
+  </PropertyGroup>
+
+  <!--
+    NCodeGroup.snk
+  -->
+  <PropertyGroup Condition="'$(SignAssembly)' == 'True' and '$(AssemblyOriginatorKeyFile)' == ''">
+    <NCodeKeyName Condition="'$(NCodeKeyName)' == ''">NCodeGroup.snk</NCodeKeyName>
+    <AssemblyOriginatorKeyFile>$([MSBuild]::GetPathOfFileAbove($(NCodeKeyName)))</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(AssemblyOriginatorKeyFile)" Condition="'$(SignAssembly)' == 'True' and Exists('$(AssemblyOriginatorKeyFile)')">
+      <Pack>False</Pack>
+      <Link>$([System.IO.Path]::GetFileName($(AssemblyOriginatorKeyFile)))</Link>
+    </None>
+  </ItemGroup>
+
+  <!--
+    LICENSE.txt
+  -->
+  <PropertyGroup Condition="'$(NCodeIncludeLicense)' == 'True' and '$(NCodeLicenseFile)' == ''">
+    <NCodeLicenseName Condition="'$(NCodeLicenseName)' == ''">LICENSE.txt</NCodeLicenseName>
+    <NCodeLicenseFile>$([MSBuild]::GetPathOfFileAbove($(NCodeLicenseName)))</NCodeLicenseFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="$(NCodeLicenseFile)" Condition="'$(NCodeIncludeLicense)' == 'True' and Exists('$(NCodeLicenseFile)')">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>$([System.IO.Path]::GetFileName($(NCodeLicenseFile)))</Link>
+    </Content>
+  </ItemGroup>
+
+  <!--
+    COPYRIGHT.txt
+  -->
+  <PropertyGroup Condition="'$(NCodeIncludeCopyright)' == 'True' and '$(NCodeCopyrightFile)' == ''">
+    <NCodeCopyrightName Condition="'$(NCodeCopyrightName)' == ''">COPYRIGHT.txt</NCodeCopyrightName>
+    <NCodeCopyrightFile>$([MSBuild]::GetPathOfFileAbove($(NCodeCopyrightName)))</NCodeCopyrightFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="$(NCodeCopyrightFile)" Condition="'$(NCodeIncludeCopyright)' == 'True' and Exists('$(NCodeCopyrightFile)')">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>$([System.IO.Path]::GetFileName($(NCodeCopyrightFile)))</Link>
+    </Content>
+  </ItemGroup>
+
+  <!--
+    GlobalAssemblyInfo.cs
+  -->
+  <PropertyGroup Condition="'$(NCodeIncludeGlobalAssemblyInfo)' == 'True' and '$(NCodeGlobalAssemblyInfoFile)' == ''">
+    <NCodeGlobalAssemblyInfoName Condition="'$(NCodeGlobalAssemblyInfoName)' == ''">GlobalAssemblyInfo.cs</NCodeGlobalAssemblyInfoName>
+    <NCodeGlobalAssemblyInfoFile>$([MSBuild]::GetPathOfFileAbove($(NCodeGlobalAssemblyInfoName)))</NCodeGlobalAssemblyInfoFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(NCodeGlobalAssemblyInfoFile)" Condition="'$(NCodeIncludeGlobalAssemblyInfo)' == 'True' and Exists('$(NCodeGlobalAssemblyInfoFile)')">
+      <Pack>False</Pack>
+      <Link>$([System.IO.Path]::GetFileName($(NCodeGlobalAssemblyInfoFile)))</Link>
+    </Compile>
+  </ItemGroup>
+
+</Project>

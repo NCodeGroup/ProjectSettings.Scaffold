@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+
+  <metadata minClientVersion="2.8">
+    <id>$id$</id>
+    <version>$version$</version>
+
+    <developmentDependency>true</developmentDependency>
+
+    <owners>NCode Group</owners>
+    <authors>NCode Group</authors>
+    <copyright>Copyright © $year$ NCode Group</copyright>
+
+    <projectUrl>https://github.com/NCodeGroup/$id$</projectUrl>
+    <licenseUrl>https://raw.githubusercontent.com/NCodeGroup/$id$/master/LICENSE.txt</licenseUrl>
+    <iconUrl>https://raw.githubusercontent.com/NCodeGroup/$id$/master/NCodeGroup.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+
+    <description>$description$</description>
+    <releaseNotes></releaseNotes>
+  </metadata>
+
+  <files>
+    <file src="..\README.md" />
+    <file src=".\readme.txt" />
+
+    <file src="..\NCode.ProjectSettings.Scaffold.sln.DotSettings" target="build" />
+
+    <file src=".\build\**.*" target="build" />
+    <file src=".\project\**.*" target="project" />
+    <file src=".\solution\**.*" target="solution" />
+
+    <file src="..\LICENSE.txt" target="solution" />
+    <file src="..\COPYRIGHT.txt" target="solution" />
+    <file src="..\NCodeGroup.png" target="solution" />
+
+    <file src="..\.editorconfig" target="solution" />
+    <file src="..\.gitattributes" target="solution" />
+    <file src="..\.gitignore" target="solution" />
+  </files>
+
+</package>
