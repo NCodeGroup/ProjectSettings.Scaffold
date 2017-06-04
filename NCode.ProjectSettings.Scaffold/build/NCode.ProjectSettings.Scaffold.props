@@ -25,6 +25,12 @@
     https://docs.microsoft.com/en-us/nuget/schema/nuspec
   -->
 
+  <PropertyGroup>
+    <_NCodePackageBase>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'ncode.projectsettings.scaffold.nuspec'))</_NCodePackageBase>
+    <_NCodeSolutionFilesDir>$([System.IO.Path]::Combine($(_NCodePackageBase), "solution"))</_NCodeSolutionFilesDir>
+    <_NCodeProjectFilesDir>$([System.IO.Path]::Combine($(_NCodePackageBase), "project"))</_NCodeProjectFilesDir>
+  </PropertyGroup>
+
   <!--
     project.props
   -->
@@ -80,6 +86,7 @@
     Options to Enable or Disable
   -->
   <PropertyGroup>
+    <NCodeIncludeReadme Condition="'$(NCodeIncludeReadme)'==''">True</NCodeIncludeReadme>
     <NCodeIncludeLicense Condition="'$(NCodeIncludeLicense)'==''">True</NCodeIncludeLicense>
     <NCodeIncludeCopyright Condition="'$(NCodeIncludeCopyright)'==''">True</NCodeIncludeCopyright>
     <NCodeIncludeGlobalAssemblyInfo Condition="'$(NCodeIncludeGlobalAssemblyInfo)'==''">True</NCodeIncludeGlobalAssemblyInfo>
@@ -167,11 +174,27 @@
   </ItemGroup>
 
   <!--
+    README.md
+  -->
+  <PropertyGroup Condition="'$(NCodeIncludeReadme)' == 'True' and '$(NCodeReadmeFile)' == ''">
+    <NCodeReadmeName Condition="'$(NCodeReadmeName)' == ''">README.md</NCodeReadmeName>
+    <NCodeReadmeFile>$([MSBuild]::GetPathOfFileAbove($(NCodeReadmeName), $(MSBuildProjectDirectory)))</NCodeReadmeFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(NCodeReadmeFile)" Condition="'$(NCodeIncludeReadme)' == 'True' and Exists('$(NCodeReadmeFile)')">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>$([System.IO.Path]::GetFileName($(NCodeReadmeFile)))</Link>
+    </None>
+  </ItemGroup>
+
+  <!--
     LICENSE.txt
   -->
   <PropertyGroup Condition="'$(NCodeIncludeLicense)' == 'True' and '$(NCodeLicenseFile)' == ''">
     <NCodeLicenseName Condition="'$(NCodeLicenseName)' == ''">LICENSE.txt</NCodeLicenseName>
-    <NCodeLicenseFile>$([MSBuild]::GetPathOfFileAbove($(NCodeLicenseName)))</NCodeLicenseFile>
+    <NCodeLicenseFile>$([MSBuild]::GetPathOfFileAbove($(NCodeLicenseName), $(_NCodeSolutionFilesDir)))</NCodeLicenseFile>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="$(NCodeLicenseFile)" Condition="'$(NCodeIncludeLicense)' == 'True' and Exists('$(NCodeLicenseFile)')">
@@ -187,7 +210,7 @@
   -->
   <PropertyGroup Condition="'$(NCodeIncludeCopyright)' == 'True' and '$(NCodeCopyrightFile)' == ''">
     <NCodeCopyrightName Condition="'$(NCodeCopyrightName)' == ''">COPYRIGHT.txt</NCodeCopyrightName>
-    <NCodeCopyrightFile>$([MSBuild]::GetPathOfFileAbove($(NCodeCopyrightName)))</NCodeCopyrightFile>
+    <NCodeCopyrightFile>$([MSBuild]::GetPathOfFileAbove($(NCodeCopyrightName), $(_NCodeSolutionFilesDir)))</NCodeCopyrightFile>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="$(NCodeCopyrightFile)" Condition="'$(NCodeIncludeCopyright)' == 'True' and Exists('$(NCodeCopyrightFile)')">

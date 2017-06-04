@@ -23,6 +23,11 @@
 
     .nuspec reference
     https://docs.microsoft.com/en-us/nuget/schema/nuspec
+    
+  <PropertyGroup>
+    <Version>1.0.0</Version>
+    <Description></Description>
+  </PropertyGroup>
   -->
 
 </Project>

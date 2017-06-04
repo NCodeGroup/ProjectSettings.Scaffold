@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <PropertyGroup>
-    <_NCodePackageBase>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'ncode.projectsettings.scaffold.nuspec'))</_NCodePackageBase>
-    <_NCodeSolutionFilesDir>$([System.IO.Path]::Combine($(_NCodePackageBase), "solution"))</_NCodeSolutionFilesDir>
-    <_NCodeProjectFilesDir>$([System.IO.Path]::Combine($(_NCodePackageBase), "project"))</_NCodeProjectFilesDir>
-  </PropertyGroup>
-
   <ItemGroup>
     <!--
       Copy all files from 'PackageBase\solution' to the solution directory
