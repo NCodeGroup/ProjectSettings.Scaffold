@@ -22,11 +22,14 @@
 
   <files>
     <file src="..\README.md" />
-    <file src=".\readme.txt" />
 
-    <file src="..\NCode.ProjectSettings.Scaffold.sln.DotSettings" target="build" />
-
+    <!-- https://github.com/Microsoft/msbuild/issues/1860 -->
+    <file src=".\build\**.*" target="buildCrossTargeting" />
     <file src=".\build\**.*" target="build" />
+
+    <file src=".\root\**.*" />
+    <file src="..\NCode.ProjectSettings.Scaffold.sln.DotSettings" />
+
     <file src=".\project\**.*" target="project" />
     <file src=".\solution\**.*" target="solution" />
 

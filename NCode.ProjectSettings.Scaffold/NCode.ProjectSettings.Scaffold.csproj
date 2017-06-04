@@ -1,20 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <IsTool>True</IsTool>
-    <NuspecFile>package.nuspec</NuspecFile>
-
-    <SignAssemblyFlag>False</SignAssemblyFlag>
-    <NCodeIncludeLicense>False</NCodeIncludeLicense>
-    <NCodeIncludeCopyright>False</NCodeIncludeCopyright>
-    <NCodeIncludeGlobalAssemblyInfo>False</NCodeIncludeGlobalAssemblyInfo>
-  </PropertyGroup>
-
   <Import Condition="Exists('$(MSBuildThisFileDirectory)build\NCode.ProjectSettings.Scaffold.props')" Project="$(MSBuildThisFileDirectory)build\NCode.ProjectSettings.Scaffold.props" />
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
-    <Description>Contains common settings, scripts, and files to scaffold C# projects for NCodeGroup.</Description>
   </PropertyGroup>
 
 </Project>
