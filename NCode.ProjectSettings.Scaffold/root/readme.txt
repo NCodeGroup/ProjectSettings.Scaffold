@@ -9,17 +9,15 @@
         .gitignore
         COPYRIGHT.txt
         LICENSE.txt
-        NCode.sln.DotSettings
-        NCodeGroup.png
         README.md
 
     3) Open $(ProjectName).csproj and edit:
 
         From:
-            <PackageReference Include="NCode.ProjectSettings.Scaffold" Version="1.0.0" />
+            <PackageReference Include="NCode.ProjectSettings.Scaffold" Version="1.0.3" />
 
         To:
-            <PackageReference Include="NCode.ProjectSettings.Scaffold" Version="1.0.0" >
+            <PackageReference Include="NCode.ProjectSettings.Scaffold" Version="1.0.3" >
                 <PrivateAssets>All</PrivateAssets>
             </PackageReference>
 

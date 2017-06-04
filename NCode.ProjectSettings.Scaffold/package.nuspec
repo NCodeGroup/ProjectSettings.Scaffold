@@ -17,7 +17,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
     <description>$description$</description>
-    <releaseNotes></releaseNotes>
+    <releaseNotes>Built on $timestamp$</releaseNotes>
   </metadata>
 
   <files>

@@ -32,7 +32,7 @@
     <Message Text="NCode&gt; NCodeSolutionFilesDir: '$(_NCodeSolutionFilesDir)'" Importance="high" />
     <Message Text="NCode&gt; NCodeProjectFilesDir: '$(_NCodeProjectFilesDir)'" Importance="high" />
 
-    <Message Text="NCode&gt; NCodeFiles2: '@(_NCodeFiles)'" Importance="high" />
+    <Message Text="NCode&gt; NCodeFiles: '@(_NCodeFiles)'" Importance="high" />
 
     <CallTarget Targets="NCodeCopyFiles" Condition="'$(NCodeEnableCopyFiles)'=='True'" />
   </Target>
