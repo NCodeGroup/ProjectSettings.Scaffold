@@ -2,6 +2,9 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <!--
+    MSBuild Reserved and Well-Known Properties
+    https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-reserved-and-well-known-properties
+
     Property Functions
     https://docs.microsoft.com/en-us/visualstudio/msbuild/property-functions
 
@@ -23,12 +26,17 @@
 
     .nuspec reference
     https://docs.microsoft.com/en-us/nuget/schema/nuspec
-    
+
+  <PropertyGroup>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
+  </PropertyGroup>
+
   <PropertyGroup>
     <Version>1.0.0</Version>
     <Description></Description>
     <PackageTags></PackageTags>
   </PropertyGroup>
+
   -->
 
 </Project>
