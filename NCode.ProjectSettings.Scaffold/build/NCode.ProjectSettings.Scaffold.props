@@ -128,8 +128,8 @@
     <PackageId Condition="'$(PackageId)'==''">$(MSBuildProjectName)</PackageId>
     <PackageVersion Condition="'$(PackageVersion)'==''">$(Version)</PackageVersion>
 
+    <PackageLicenseExpression Condition="'$(PackageLicenseExpression)'==''">Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl Condition="'$(PackageProjectUrl)'==''">https://github.com/NCodeGroup/$(PackageId).git</PackageProjectUrl>
-    <PackageLicenseUrl Condition="'$(PackageLicenseUrl)'=='' and '$(NCodeIncludeLicense)'=='True'">https://raw.githubusercontent.com/NCodeGroup/$(PackageId)/master/LICENSE.txt</PackageLicenseUrl>
     <PackageIconUrl Condition="'$(PackageIconUrl)'==''">https://raw.githubusercontent.com/NCodeGroup/$(PackageId)/master/NCodeGroup.png</PackageIconUrl>
 
     <PackageTags Condition="'$(PackageTags)'==''"></PackageTags>

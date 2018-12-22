@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
 
   <metadata minClientVersion="2.8">
@@ -12,8 +12,9 @@
     <copyright>Copyright © $year$ NCode Group</copyright>
 
     <projectUrl>https://github.com/NCodeGroup/$id$</projectUrl>
-    <licenseUrl>https://raw.githubusercontent.com/NCodeGroup/$id$/master/LICENSE.txt</licenseUrl>
     <iconUrl>https://raw.githubusercontent.com/NCodeGroup/$id$/master/NCodeGroup.png</iconUrl>
+
+    <license type="expression">Apache-2.0</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
     <description>$description$</description>

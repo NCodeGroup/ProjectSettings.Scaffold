@@ -1,4 +1,4 @@
-﻿After this package is installed, perform the following to complete the project scaffold:
+After this package is installed, perform the following to complete the project scaffold:
 
     1) Build the Solution
 
@@ -14,10 +14,10 @@
     3) Open $(ProjectName).csproj and edit:
 
         From:
-            <PackageReference Include="NCode.ProjectSettings.Scaffold" Version="1.0.4" />
+            <PackageReference Include="NCode.ProjectSettings.Scaffold" Version="1.0.6" />
 
         To:
-            <PackageReference Include="NCode.ProjectSettings.Scaffold" Version="1.0.4" >
+            <PackageReference Include="NCode.ProjectSettings.Scaffold" Version="1.0.6" >
                 <PrivateAssets>All</PrivateAssets>
             </PackageReference>
 
