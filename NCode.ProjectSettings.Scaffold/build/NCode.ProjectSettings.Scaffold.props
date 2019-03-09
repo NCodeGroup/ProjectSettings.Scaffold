@@ -92,7 +92,7 @@
     Overrides for GlobalAssemblyInfo
   -->
   <PropertyGroup>
-    <NCodeClsCompliant Condition="'$(NCodeClsCompliant)'==''">True</NCodeClsCompliant>
+    <NCodeClsCompliant Condition="'$(NCodeClsCompliant)'==''">False</NCodeClsCompliant>
     <DefineConstants Condition="'$(NCodeClsCompliant)'=='True'">$(DefineConstants);NCodeClsCompliantTrue</DefineConstants>
     <DefineConstants Condition="'$(NCodeClsCompliant)'=='False'">$(DefineConstants);NCodeClsCompliantFalse</DefineConstants>
 

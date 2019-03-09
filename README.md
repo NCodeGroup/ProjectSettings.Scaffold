@@ -14,3 +14,4 @@ Contains common settings, scripts, and files to scaffold C# projects for NCodeGr
 * v1.0.4 - Added additional examples to project.props
 * v1.0.5 - Updates for NET Core SDK
 * v1.0.6 - Updates for [SPDX license] expression
+* v1.0.7 - Change default for CLS compliance to False

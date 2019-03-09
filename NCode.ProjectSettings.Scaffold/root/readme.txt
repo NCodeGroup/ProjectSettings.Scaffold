@@ -14,10 +14,10 @@ After this package is installed, perform the following to complete the project s
     3) Open $(ProjectName).csproj and edit:
 
         From:
-            <PackageReference Include="NCode.ProjectSettings.Scaffold" Version="1.0.6" />
+            <PackageReference Include="NCode.ProjectSettings.Scaffold" Version="1.0.7" />
 
         To:
-            <PackageReference Include="NCode.ProjectSettings.Scaffold" Version="1.0.6" >
+            <PackageReference Include="NCode.ProjectSettings.Scaffold" Version="1.0.7" >
                 <PrivateAssets>All</PrivateAssets>
             </PackageReference>
 
