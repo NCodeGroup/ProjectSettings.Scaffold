@@ -1,0 +1,35 @@
+version: "{build}"
+shallow_clone: true
+
+branches:
+  only:
+  - master
+
+image: Visual Studio 2017
+configuration: Release
+platform: Any CPU
+
+environment:
+  configuration: $(configuration)
+
+init:
+- cmd: msbuild /version /nologo
+- cmd: dotnet --version
+
+before_build:
+- cmd: dotnet restore
+
+build:
+  parallel: true
+  verbosity: minimal
+
+artifacts:
+- path: '**\NCode.ProjectSettings.Scaffold.*.nupkg'
+  name: Packages
+
+deploy:
+- provider: NuGet
+  on:
+    APPVEYOR_REPO_TAG: true
+  api_key:
+    secure: pzvKbbudjmurey9no+lmNxd6Ns4zlxtA53dWSTIzjJO2VwKXzWScLTkjUK3s87YO
