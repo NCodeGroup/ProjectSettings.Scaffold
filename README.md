@@ -3,6 +3,8 @@
 
 # Overview
 
+[![Build status](https://ci.appveyor.com/api/projects/status/fwoj34tnk343gg4e/branch/master?svg=true)](https://ci.appveyor.com/project/polewskm/ncode-projectsettings-scaffold/branch/master)
+
 Contains common settings, scripts, and files to scaffold C# projects for NCodeGroup.
 
 ## Release Notes
