@@ -6,9 +6,14 @@
 
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
 
-    <AssemblyVersion>1.0.0</AssemblyVersion>
-    <FileVersion>$(AssemblyVersion)</FileVersion>
-    <Version>$(AssemblyVersion)</Version>
+    <VersionCore>0.0.1</VersionCore>
+    <PreRelease>alpha</PreRelease>
+
+    <Version Condition="'$(PreRelease)' == ''">$(VersionCore)</Version>
+    <Version Condition="'$(PreRelease)' != ''">$(VersionCore)-$(PreRelease)</Version>
+
+    <FileVersion>$(VersionCore)</FileVersion>
+    <AssemblyVersion>$(VersionCore)</AssemblyVersion>
 
   </PropertyGroup>
 </Project>

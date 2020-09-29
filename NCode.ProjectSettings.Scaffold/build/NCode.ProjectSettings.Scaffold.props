@@ -86,6 +86,7 @@
     <NCodeIncludeCopyright Condition="'$(NCodeIncludeCopyright)'==''">True</NCodeIncludeCopyright>
     <NCodeIncludeGlobalAssemblyInfo Condition="'$(NCodeIncludeGlobalAssemblyInfo)'==''">True</NCodeIncludeGlobalAssemblyInfo>
     <NCodeEnableCopyFiles Condition="'$(NCodeEnableCopyFiles)'==''">True</NCodeEnableCopyFiles>
+    <NCodeIncludeImage Condition="'$(NCodeIncludeImage)' == ''">True</NCodeIncludeImage>
   </PropertyGroup>
 
   <!--
@@ -130,7 +131,6 @@
 
     <PackageLicenseExpression Condition="'$(PackageLicenseExpression)'==''">Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl Condition="'$(PackageProjectUrl)'==''">https://github.com/NCodeGroup/$(PackageId).git</PackageProjectUrl>
-    <PackageIconUrl Condition="'$(PackageIconUrl)'==''">https://raw.githubusercontent.com/NCodeGroup/$(PackageId)/master/NCodeGroup.png</PackageIconUrl>
 
     <PackageTags Condition="'$(PackageTags)'==''"></PackageTags>
     <PackageReleaseNotes Condition="'$(PackageReleaseNotes)'==''">Built on $(NCodeBuildTimestamp)</PackageReleaseNotes>
@@ -152,6 +152,26 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(NuspecFile)'==''">
     <NuspecProperties></NuspecProperties>
+  </PropertyGroup>
+
+  <!--
+    NCodeGroup.png
+  -->
+  <PropertyGroup Condition="'$(NCodeIncludeImage)' == 'True' and '$(NCodeImageFile)' == ''">
+    <NCodeImageName Condition="'$(NCodeImageName)' == ''">NCodeGroup.png</NCodeImageName>
+    <NCodeImageFile>$([MSBuild]::GetPathOfFileAbove($(NCodeImageName), $(MSBuildProjectDirectory)))</NCodeImageFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(NCodeImageFile)" Condition="'$(NCodeIncludeImage)' == 'True' and Exists('$(NCodeImageFile)')">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>$([System.IO.Path]::GetFileName($(NCodeImageFile)))</Link>
+    </None>
+  </ItemGroup>
+  <PropertyGroup Condition="'$(NCodeIncludeImage)' == 'True'">
+    <PackageIcon Condition="'$(PackageIcon)'==''">$(NCodeImageName)</PackageIcon>
+    <PackageIconUrl Condition="'$(PackageIconUrl)'==''">https://raw.githubusercontent.com/NCodeGroup/$(PackageId)/master/$(NCodeImageName)</PackageIconUrl>
   </PropertyGroup>
 
   <!--

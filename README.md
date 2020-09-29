@@ -1,5 +1,6 @@
 [buildCrossTargeting]: https://github.com/Microsoft/msbuild/issues/1860
 [SPDX license]: https://github.com/NuGet/Home/wiki/Packaging-License-within-the-nupkg-(Technical-Spec)#license-expression-pack
+[NU5048]: https://aka.ms/deprecateIconUrl
 
 # Overview
 
@@ -18,3 +19,4 @@ Contains common settings, scripts, and files to scaffold C# projects for NCodeGr
 * v1.0.6 - Updates for [SPDX license] expression
 * v1.0.7 - Change default for CLS compliance to False
 * v1.0.8 - Added `Directory.Build.props`
+* v1.0.9 - Deprecating `PackageIconUrl` in favor of `PackageIcon` (see [NU5048])

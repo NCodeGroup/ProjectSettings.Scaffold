@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
 
-  <metadata minClientVersion="2.8">
+  <metadata minClientVersion="5.3">
     <id>$id$</id>
     <version>$version$</version>
 
@@ -13,6 +13,7 @@
 
     <projectUrl>https://github.com/NCodeGroup/$id$</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/NCodeGroup/$id$/master/NCodeGroup.png</iconUrl>
+    <icon>NCodeGroup.png</icon>
 
     <license type="expression">Apache-2.0</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -37,6 +38,7 @@
     <file src="..\LICENSE.txt" target="solution" />
     <file src="..\COPYRIGHT.txt" target="solution" />
     <file src="..\NCodeGroup.png" target="solution" />
+    <file src="..\NCodeGroup.png" />
 
     <file src="..\.editorconfig" target="solution" />
     <file src="..\.gitattributes" target="solution" />

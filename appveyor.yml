@@ -5,7 +5,7 @@ branches:
   only:
   - master
 
-image: Visual Studio 2017
+image: Visual Studio 2019
 configuration: Release
 platform: Any CPU
 
@@ -32,4 +32,4 @@ deploy:
   on:
     APPVEYOR_REPO_TAG: true
   api_key:
-    secure: pzvKbbudjmurey9no+lmNxd6Ns4zlxtA53dWSTIzjJO2VwKXzWScLTkjUK3s87YO
+    secure: oqVKOGZD+OkIgQQyAdd/hJcagdEY6yQA6lWfH2nINI+GmRcABF6vtslzmQxDqU62
