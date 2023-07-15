@@ -60,10 +60,12 @@
   </PropertyGroup>
 
   <!--
+    NCodeDefaultBranch
     NCodeBuildYear
     NCodeBuildTimestamp
   -->
   <PropertyGroup>
+    <NCodeDefaultBranch Condition="'$(NCodeDefaultBranch)' == ''">main</NCodeDefaultBranch>
     <NCodeBuildYear Condition="'$(NCodeBuildYear)'==''">$([System.DateTime]::Now.Year)</NCodeBuildYear>
     <NCodeBuildTimestamp Condition="'$(NCodeBuildTimestamp)'==''">$([System.DateTime]::Now.ToString("u"))</NCodeBuildTimestamp>
   </PropertyGroup>
@@ -171,7 +173,7 @@
   </ItemGroup>
   <PropertyGroup Condition="'$(NCodeIncludeImage)' == 'True'">
     <PackageIcon Condition="'$(PackageIcon)'==''">$(NCodeImageName)</PackageIcon>
-    <PackageIconUrl Condition="'$(PackageIconUrl)'==''">https://raw.githubusercontent.com/NCodeGroup/$(PackageId)/master/$(NCodeImageName)</PackageIconUrl>
+    <PackageIconUrl Condition="'$(PackageIconUrl)'==''">https://raw.githubusercontent.com/NCodeGroup/$(PackageId)/$(NCodeDefaultBranch)/$(NCodeImageName)</PackageIconUrl>
   </PropertyGroup>
 
   <!--
