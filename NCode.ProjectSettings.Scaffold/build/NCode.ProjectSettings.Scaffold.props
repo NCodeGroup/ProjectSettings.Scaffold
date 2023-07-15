@@ -196,6 +196,7 @@
   <PropertyGroup Condition="'$(NCodeIncludeReadme)' == 'True' and '$(NCodeReadmeFile)' == ''">
     <NCodeReadmeName Condition="'$(NCodeReadmeName)' == ''">README.md</NCodeReadmeName>
     <NCodeReadmeFile>$([MSBuild]::GetPathOfFileAbove($(NCodeReadmeName), $(MSBuildProjectDirectory)))</NCodeReadmeFile>
+    <PackageReadmeFile Condition="'$(PackageReadmeFile)' == '' and '$(NCodeIncludeReadme)' == 'True'">$(NCodeReadmeName)</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
     <None Include="$(NCodeReadmeFile)" Condition="'$(NCodeIncludeReadme)' == 'True' and Exists('$(NCodeReadmeFile)')">
