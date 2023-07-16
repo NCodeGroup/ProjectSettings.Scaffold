@@ -132,10 +132,7 @@
   <PropertyGroup Condition="'$(GeneratePackageOnBuild)'=='true'">
     <PackageId Condition="'$(PackageId)'==''">$(MSBuildProjectName)</PackageId>
     <PackageVersion Condition="'$(PackageVersion)'==''">$(Version)</PackageVersion>
-
     <PackageLicenseExpression Condition="'$(PackageLicenseExpression)'==''">Apache-2.0</PackageLicenseExpression>
-    <PackageProjectUrl Condition="'$(PackageProjectUrl)'==''">https://github.com/NCodeGroup/$(PackageId).git</PackageProjectUrl>
-
     <PackageTags Condition="'$(PackageTags)'==''"></PackageTags>
     <PackageReleaseNotes Condition="'$(PackageReleaseNotes)'==''">Built on $(NCodeBuildTimestamp)</PackageReleaseNotes>
   </PropertyGroup>

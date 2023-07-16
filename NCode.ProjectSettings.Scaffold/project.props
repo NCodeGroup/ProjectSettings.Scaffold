@@ -2,21 +2,23 @@
 <Project>
 
   <PropertyGroup>
-    <IsTool>True</IsTool>
+    <IsTool>true</IsTool>
     <NuspecFile>package.nuspec</NuspecFile>
 
-    <Version>1.0.11</Version>
+    <Version>1.0.12</Version>
 
     <Description>Contains common settings, scripts, and files to scaffold C# projects for NCodeGroup.</Description>
 
-    <SignAssembly>False</SignAssembly>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <SignAssembly>false</SignAssembly>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <ContinuousIntegrationBuild Condition="'$(ContinuousIntegrationBuild)' == '' and '$(CI)' == 'true'">true</ContinuousIntegrationBuild>
 
-    <NCodeIncludeLicense>False</NCodeIncludeLicense>
-    <NCodeIncludeCopyright>False</NCodeIncludeCopyright>
-    <NCodeIncludeGlobalAssemblyInfo>False</NCodeIncludeGlobalAssemblyInfo>
+    <NCodeIncludeLicense>false</NCodeIncludeLicense>
+    <NCodeIncludeCopyright>false</NCodeIncludeCopyright>
+    <NCodeIncludeGlobalAssemblyInfo>false</NCodeIncludeGlobalAssemblyInfo>
 
-    <NoDefaultExcludes>True</NoDefaultExcludes>
+    <NoDefaultExcludes>true</NoDefaultExcludes>
   </PropertyGroup>
 
   <!--
