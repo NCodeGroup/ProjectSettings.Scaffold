@@ -34,7 +34,7 @@
 
     <Message Text="NCode&gt; NCodeFiles: '@(_NCodeFiles)'" Importance="high" />
 
-    <CallTarget Targets="NCodeCopyFiles" Condition="'$(NCodeEnableCopyFiles)'=='True'" />
+    <CallTarget Targets="NCodeCopyFiles" Condition="'$(NCodeEnableCopyFiles)'=='true'" />
   </Target>
 
   <Target Name="NCodeCopyFiles" DependsOnTargets="NCodeResolveCopyFiles">

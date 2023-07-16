@@ -21,3 +21,4 @@ Contains common settings, scripts, and files to scaffold C# projects for NCodeGr
 * v1.0.8 - Added `Directory.Build.props`
 * v1.0.9 - Deprecating `PackageIconUrl` in favor of `PackageIcon` (see [NU5048])
 * v1.0.10 - Pack README and added option for default branch name (used in NuGet package icon)
+* v1.0.11 - Added setting for ContinuousIntegrationBuild

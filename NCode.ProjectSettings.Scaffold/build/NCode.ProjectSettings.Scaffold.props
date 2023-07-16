@@ -36,9 +36,9 @@
     project.props
   -->
   <PropertyGroup>
-    <NCodeImportProjectProps Condition="'$(NCodeImportProjectProps)'==''">True</NCodeImportProjectProps>
+    <NCodeImportProjectProps Condition="'$(NCodeImportProjectProps)'==''">true</NCodeImportProjectProps>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(NCodeImportProjectProps)'=='True' and '$(NCodeProjectPropsPath)'==''">
+  <PropertyGroup Condition="'$(NCodeImportProjectProps)'=='true' and '$(NCodeProjectPropsPath)'==''">
     <_NCodeProjectPropsFile Condition="'$(_NCodeProjectPropsFile)' == ''">project.props</_NCodeProjectPropsFile>
     <_NCodeProjectPropsBasePath Condition="'$(_NCodeProjectPropsBasePath)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), '$(_NCodeProjectPropsFile)'))</_NCodeProjectPropsBasePath>
     <NCodeProjectPropsPath Condition="'$(_NCodeProjectPropsBasePath)' != '' and '$(_NCodeProjectPropsFile)' != ''">$([System.IO.Path]::Combine('$(_NCodeProjectPropsBasePath)', '$(_NCodeProjectPropsFile)'))</NCodeProjectPropsPath>
@@ -73,38 +73,40 @@
   <!--
     SignAssembly
     GeneratePackageOnBuild
+    ContinuousIntegrationBuild
   -->
   <PropertyGroup>
-    <SignAssembly Condition="'$(SignAssembly)'==''">False</SignAssembly>
-    <GeneratePackageOnBuild Condition="'$(GeneratePackageOnBuild)'==''">True</GeneratePackageOnBuild>
+    <SignAssembly Condition="'$(SignAssembly)'==''">false</SignAssembly>
+    <GeneratePackageOnBuild Condition="'$(GeneratePackageOnBuild)'==''">true</GeneratePackageOnBuild>
+    <ContinuousIntegrationBuild Condition="'$(ContinuousIntegrationBuild)' == '' and '$(CI)' == 'true'">true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
   <!--
     Options to Enable or Disable
   -->
   <PropertyGroup>
-    <NCodeIncludeReadme Condition="'$(NCodeIncludeReadme)'==''">True</NCodeIncludeReadme>
-    <NCodeIncludeLicense Condition="'$(NCodeIncludeLicense)'==''">True</NCodeIncludeLicense>
-    <NCodeIncludeCopyright Condition="'$(NCodeIncludeCopyright)'==''">True</NCodeIncludeCopyright>
-    <NCodeIncludeGlobalAssemblyInfo Condition="'$(NCodeIncludeGlobalAssemblyInfo)'==''">True</NCodeIncludeGlobalAssemblyInfo>
-    <NCodeEnableCopyFiles Condition="'$(NCodeEnableCopyFiles)'==''">True</NCodeEnableCopyFiles>
-    <NCodeIncludeImage Condition="'$(NCodeIncludeImage)' == ''">True</NCodeIncludeImage>
+    <NCodeIncludeReadme Condition="'$(NCodeIncludeReadme)'==''">true</NCodeIncludeReadme>
+    <NCodeIncludeLicense Condition="'$(NCodeIncludeLicense)'==''">true</NCodeIncludeLicense>
+    <NCodeIncludeCopyright Condition="'$(NCodeIncludeCopyright)'==''">true</NCodeIncludeCopyright>
+    <NCodeIncludeGlobalAssemblyInfo Condition="'$(NCodeIncludeGlobalAssemblyInfo)'==''">true</NCodeIncludeGlobalAssemblyInfo>
+    <NCodeEnableCopyFiles Condition="'$(NCodeEnableCopyFiles)'==''">true</NCodeEnableCopyFiles>
+    <NCodeIncludeImage Condition="'$(NCodeIncludeImage)' == ''">true</NCodeIncludeImage>
   </PropertyGroup>
 
   <!--
     Overrides for GlobalAssemblyInfo
   -->
   <PropertyGroup>
-    <NCodeClsCompliant Condition="'$(NCodeClsCompliant)'==''">False</NCodeClsCompliant>
-    <DefineConstants Condition="'$(NCodeClsCompliant)'=='True'">$(DefineConstants);NCodeClsCompliantTrue</DefineConstants>
-    <DefineConstants Condition="'$(NCodeClsCompliant)'=='False'">$(DefineConstants);NCodeClsCompliantFalse</DefineConstants>
+    <NCodeClsCompliant Condition="'$(NCodeClsCompliant)'==''">false</NCodeClsCompliant>
+    <DefineConstants Condition="'$(NCodeClsCompliant)'=='true'">$(DefineConstants);NCodeClsCompliantTrue</DefineConstants>
+    <DefineConstants Condition="'$(NCodeClsCompliant)'=='false'">$(DefineConstants);NCodeClsCompliantFalse</DefineConstants>
 
-    <DefineConstants Condition="'$(NCodeAssemblyTrademarkDisable)'=='True'">$(DefineConstants);NCodeAssemblyTrademarkDisable</DefineConstants>
-    <DefineConstants Condition="'$(NCodeAssemblyCultureDisable)'=='True'">$(DefineConstants);NCodeAssemblyCultureDisable</DefineConstants>
+    <DefineConstants Condition="'$(NCodeAssemblyTrademarkDisable)'=='true'">$(DefineConstants);NCodeAssemblyTrademarkDisable</DefineConstants>
+    <DefineConstants Condition="'$(NCodeAssemblyCultureDisable)'=='true'">$(DefineConstants);NCodeAssemblyCultureDisable</DefineConstants>
 
-    <NCodeComVisible Condition="'$(NCodeComVisible)'==''">False</NCodeComVisible>
-    <DefineConstants Condition="'$(NCodeComVisible)'=='True'">$(DefineConstants);NCodeComVisibleTrue</DefineConstants>
-    <DefineConstants Condition="'$(NCodeComVisible)'=='False'">$(DefineConstants);NCodeComVisibleFalse</DefineConstants>
+    <NCodeComVisible Condition="'$(NCodeComVisible)'==''">false</NCodeComVisible>
+    <DefineConstants Condition="'$(NCodeComVisible)'=='true'">$(DefineConstants);NCodeComVisibleTrue</DefineConstants>
+    <DefineConstants Condition="'$(NCodeComVisible)'=='false'">$(DefineConstants);NCodeComVisibleFalse</DefineConstants>
   </PropertyGroup>
 
   <!--
@@ -127,7 +129,7 @@
   <!--
     Package Info
   -->
-  <PropertyGroup Condition="'$(GeneratePackageOnBuild)'=='True'">
+  <PropertyGroup Condition="'$(GeneratePackageOnBuild)'=='true'">
     <PackageId Condition="'$(PackageId)'==''">$(MSBuildProjectName)</PackageId>
     <PackageVersion Condition="'$(PackageVersion)'==''">$(Version)</PackageVersion>
 
@@ -159,19 +161,19 @@
   <!--
     NCodeGroup.png
   -->
-  <PropertyGroup Condition="'$(NCodeIncludeImage)' == 'True' and '$(NCodeImageFile)' == ''">
+  <PropertyGroup Condition="'$(NCodeIncludeImage)' == 'true' and '$(NCodeImageFile)' == ''">
     <NCodeImageName Condition="'$(NCodeImageName)' == ''">NCodeGroup.png</NCodeImageName>
     <NCodeImageFile>$([MSBuild]::GetPathOfFileAbove($(NCodeImageName), $(MSBuildProjectDirectory)))</NCodeImageFile>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="$(NCodeImageFile)" Condition="'$(NCodeIncludeImage)' == 'True' and Exists('$(NCodeImageFile)')">
-      <Pack>True</Pack>
+    <None Include="$(NCodeImageFile)" Condition="'$(NCodeIncludeImage)' == 'true' and Exists('$(NCodeImageFile)')">
+      <Pack>true</Pack>
       <PackagePath>\</PackagePath>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Link>$([System.IO.Path]::GetFileName($(NCodeImageFile)))</Link>
     </None>
   </ItemGroup>
-  <PropertyGroup Condition="'$(NCodeIncludeImage)' == 'True'">
+  <PropertyGroup Condition="'$(NCodeIncludeImage)' == 'true'">
     <PackageIcon Condition="'$(PackageIcon)'==''">$(NCodeImageName)</PackageIcon>
     <PackageIconUrl Condition="'$(PackageIconUrl)'==''">https://raw.githubusercontent.com/NCodeGroup/$(PackageId)/$(NCodeDefaultBranch)/$(NCodeImageName)</PackageIconUrl>
   </PropertyGroup>
@@ -179,13 +181,13 @@
   <!--
     NCodeGroup.snk
   -->
-  <PropertyGroup Condition="'$(SignAssembly)' == 'True' and '$(AssemblyOriginatorKeyFile)' == ''">
+  <PropertyGroup Condition="'$(SignAssembly)' == 'true' and '$(AssemblyOriginatorKeyFile)' == ''">
     <NCodeKeyName Condition="'$(NCodeKeyName)' == ''">NCodeGroup.snk</NCodeKeyName>
     <AssemblyOriginatorKeyFile>$([MSBuild]::GetPathOfFileAbove($(NCodeKeyName)))</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="$(AssemblyOriginatorKeyFile)" Condition="'$(SignAssembly)' == 'True' and Exists('$(AssemblyOriginatorKeyFile)')">
-      <Pack>False</Pack>
+    <None Include="$(AssemblyOriginatorKeyFile)" Condition="'$(SignAssembly)' == 'true' and Exists('$(AssemblyOriginatorKeyFile)')">
+      <Pack>false</Pack>
       <Link>$([System.IO.Path]::GetFileName($(AssemblyOriginatorKeyFile)))</Link>
     </None>
   </ItemGroup>
@@ -193,14 +195,14 @@
   <!--
     README.md
   -->
-  <PropertyGroup Condition="'$(NCodeIncludeReadme)' == 'True' and '$(NCodeReadmeFile)' == ''">
+  <PropertyGroup Condition="'$(NCodeIncludeReadme)' == 'true' and '$(NCodeReadmeFile)' == ''">
     <NCodeReadmeName Condition="'$(NCodeReadmeName)' == ''">README.md</NCodeReadmeName>
     <NCodeReadmeFile>$([MSBuild]::GetPathOfFileAbove($(NCodeReadmeName), $(MSBuildProjectDirectory)))</NCodeReadmeFile>
-    <PackageReadmeFile Condition="'$(PackageReadmeFile)' == '' and '$(NCodeIncludeReadme)' == 'True'">$(NCodeReadmeName)</PackageReadmeFile>
+    <PackageReadmeFile Condition="'$(PackageReadmeFile)' == '' and '$(NCodeIncludeReadme)' == 'true'">$(NCodeReadmeName)</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="$(NCodeReadmeFile)" Condition="'$(NCodeIncludeReadme)' == 'True' and Exists('$(NCodeReadmeFile)')">
-      <Pack>True</Pack>
+    <None Include="$(NCodeReadmeFile)" Condition="'$(NCodeIncludeReadme)' == 'true' and Exists('$(NCodeReadmeFile)')">
+      <Pack>true</Pack>
       <PackagePath>\</PackagePath>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Link>$([System.IO.Path]::GetFileName($(NCodeReadmeFile)))</Link>
@@ -210,13 +212,13 @@
   <!--
     LICENSE.txt
   -->
-  <PropertyGroup Condition="'$(NCodeIncludeLicense)' == 'True' and '$(NCodeLicenseFile)' == ''">
+  <PropertyGroup Condition="'$(NCodeIncludeLicense)' == 'true' and '$(NCodeLicenseFile)' == ''">
     <NCodeLicenseName Condition="'$(NCodeLicenseName)' == ''">LICENSE.txt</NCodeLicenseName>
     <NCodeLicenseFile>$([MSBuild]::GetPathOfFileAbove($(NCodeLicenseName), $(_NCodeSolutionFilesDir)))</NCodeLicenseFile>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="$(NCodeLicenseFile)" Condition="'$(NCodeIncludeLicense)' == 'True' and Exists('$(NCodeLicenseFile)')">
-      <Pack>True</Pack>
+    <Content Include="$(NCodeLicenseFile)" Condition="'$(NCodeIncludeLicense)' == 'true' and Exists('$(NCodeLicenseFile)')">
+      <Pack>true</Pack>
       <PackagePath>\</PackagePath>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Link>$([System.IO.Path]::GetFileName($(NCodeLicenseFile)))</Link>
@@ -226,13 +228,13 @@
   <!--
     COPYRIGHT.txt
   -->
-  <PropertyGroup Condition="'$(NCodeIncludeCopyright)' == 'True' and '$(NCodeCopyrightFile)' == ''">
+  <PropertyGroup Condition="'$(NCodeIncludeCopyright)' == 'true' and '$(NCodeCopyrightFile)' == ''">
     <NCodeCopyrightName Condition="'$(NCodeCopyrightName)' == ''">COPYRIGHT.txt</NCodeCopyrightName>
     <NCodeCopyrightFile>$([MSBuild]::GetPathOfFileAbove($(NCodeCopyrightName), $(_NCodeSolutionFilesDir)))</NCodeCopyrightFile>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="$(NCodeCopyrightFile)" Condition="'$(NCodeIncludeCopyright)' == 'True' and Exists('$(NCodeCopyrightFile)')">
-      <Pack>True</Pack>
+    <Content Include="$(NCodeCopyrightFile)" Condition="'$(NCodeIncludeCopyright)' == 'true' and Exists('$(NCodeCopyrightFile)')">
+      <Pack>true</Pack>
       <PackagePath>\</PackagePath>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Link>$([System.IO.Path]::GetFileName($(NCodeCopyrightFile)))</Link>
@@ -242,13 +244,13 @@
   <!--
     GlobalAssemblyInfo.cs
   -->
-  <PropertyGroup Condition="'$(NCodeIncludeGlobalAssemblyInfo)' == 'True' and '$(NCodeGlobalAssemblyInfoFile)' == ''">
+  <PropertyGroup Condition="'$(NCodeIncludeGlobalAssemblyInfo)' == 'true' and '$(NCodeGlobalAssemblyInfoFile)' == ''">
     <NCodeGlobalAssemblyInfoName Condition="'$(NCodeGlobalAssemblyInfoName)' == ''">GlobalAssemblyInfo.cs</NCodeGlobalAssemblyInfoName>
     <NCodeGlobalAssemblyInfoFile>$([MSBuild]::GetPathOfFileAbove($(NCodeGlobalAssemblyInfoName)))</NCodeGlobalAssemblyInfoFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(NCodeGlobalAssemblyInfoFile)" Condition="'$(NCodeIncludeGlobalAssemblyInfo)' == 'True' and Exists('$(NCodeGlobalAssemblyInfoFile)')">
-      <Pack>False</Pack>
+    <Compile Include="$(NCodeGlobalAssemblyInfoFile)" Condition="'$(NCodeIncludeGlobalAssemblyInfo)' == 'true' and Exists('$(NCodeGlobalAssemblyInfoFile)')">
+      <Pack>false</Pack>
       <Link>$([System.IO.Path]::GetFileName($(NCodeGlobalAssemblyInfoFile)))</Link>
     </Compile>
   </ItemGroup>
