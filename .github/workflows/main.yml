@@ -46,6 +46,7 @@ jobs:
 
   publish:
     if: github.event_name == 'release' && github.event.action == 'published' && github.event.release.tag_name
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
