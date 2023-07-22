@@ -4,16 +4,5 @@
 
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
 
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-
-    <VersionCore>0.0.1</VersionCore>
-    <PreRelease>alpha</PreRelease>
-
-    <Version Condition="'$(PreRelease)' == ''">$(VersionCore)</Version>
-    <Version Condition="'$(PreRelease)' != ''">$(VersionCore)-$(PreRelease)</Version>
-
-    <FileVersion>$(VersionCore)</FileVersion>
-    <AssemblyVersion>$(VersionCore)</AssemblyVersion>
-
   </PropertyGroup>
 </Project>
