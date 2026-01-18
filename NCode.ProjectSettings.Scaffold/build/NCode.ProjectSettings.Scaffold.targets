@@ -10,16 +10,16 @@
       is special gets copied using the destination's solution file name
     -->
 
-    <_NCodeFiles Include="$(_NCodeSolutionFilesDir)\*" Condition="'$(NCodeSolutionDir)'!=''">
-      <TargetPath>$([System.IO.Path]::Combine($(NCodeSolutionDir), $([System.IO.Path]::GetFileName(%(_NCodeFiles.FullPath)))))</TargetPath>
+    <_NCodeFiles Include="$(_NCodeSolutionFilesDir)\**\*" Condition="'$(NCodeSolutionDir)'!=''">
+      <TargetPath>$([System.IO.Path]::Combine($(NCodeSolutionDir), %(RecursiveDir), %(Filename)%(Extension)))</TargetPath>
     </_NCodeFiles>
 
     <_NCodeFiles Include="$([MSBuild]::GetPathOfFileAbove('NCode.ProjectSettings.Scaffold.sln.DotSettings'))" Condition="'$(NCodeSolutionPath)'!=''">
       <TargetPath>$(NCodeSolutionPath).DotSettings</TargetPath>
     </_NCodeFiles>
 
-    <_NCodeFiles Include="$(_NCodeProjectFilesDir)\*" Condition="'$(MSBuildProjectDirectory)'!=''">
-      <TargetPath>$([System.IO.Path]::Combine($(MSBuildProjectDirectory), $([System.IO.Path]::GetFileName(%(_NCodeFiles.FullPath)))))</TargetPath>
+    <_NCodeFiles Include="$(_NCodeProjectFilesDir)\**\*" Condition="'$(MSBuildProjectDirectory)'!=''">
+      <TargetPath>$([System.IO.Path]::Combine($(MSBuildProjectDirectory), %(RecursiveDir), %(Filename)%(Extension)))</TargetPath>
     </_NCodeFiles>
   </ItemGroup>
 
