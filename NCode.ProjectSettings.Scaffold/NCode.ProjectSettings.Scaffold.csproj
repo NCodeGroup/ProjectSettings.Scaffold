@@ -3,7 +3,7 @@
   <Import Condition="Exists('$(MSBuildThisFileDirectory)build\NCode.ProjectSettings.Scaffold.props')" Project="$(MSBuildThisFileDirectory)build\NCode.ProjectSettings.Scaffold.props" />
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
