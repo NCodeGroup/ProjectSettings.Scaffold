@@ -25,3 +25,4 @@ Contains common settings, scripts, and files to scaffold C# projects for NCodeGr
 * v1.0.12 - Removed setting for PackageProjectUrl
 * v1.0.13 - Moving CI build from appveyor to github actions
 * v1.0.14 - LF line endings and copilot settings
+* v1.0.15 - Fix nuspec wildcard handling

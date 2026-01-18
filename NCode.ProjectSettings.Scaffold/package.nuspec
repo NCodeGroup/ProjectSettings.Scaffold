@@ -30,11 +30,11 @@
     <file src=".\build\**.*" target="buildCrossTargeting" />
     <file src=".\build\**.*" target="build" />
 
-    <file src=".\root\**.*" />
+    <file src=".\root\**\*" />
     <file src="..\NCode.ProjectSettings.Scaffold.sln.DotSettings" />
 
-    <file src=".\project\**.*" target="project" />
-    <file src=".\solution\**.*" target="solution" />
+    <file src=".\project\**\*" target="project" />
+    <file src=".\solution\**\*" target="solution" />
 
     <file src="..\LICENSE.txt" target="solution" />
     <file src="..\COPYRIGHT.txt" target="solution" />
