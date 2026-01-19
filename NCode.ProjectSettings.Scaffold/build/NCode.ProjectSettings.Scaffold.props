@@ -172,7 +172,6 @@
   </ItemGroup>
   <PropertyGroup Condition="'$(NCodeIncludeImage)' == 'true'">
     <PackageIcon Condition="'$(PackageIcon)'==''">$(NCodeImageName)</PackageIcon>
-    <PackageIconUrl Condition="'$(PackageIconUrl)'==''">https://raw.githubusercontent.com/NCodeGroup/$(PackageId)/$(NCodeDefaultBranch)/$(NCodeImageName)</PackageIconUrl>
   </PropertyGroup>
 
   <!--
