@@ -60,6 +60,14 @@
   </PropertyGroup>
 
   <!--
+    Disable XML doc for test projects
+  -->
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true'">
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <!--
     NCodeDefaultBranch
     NCodeBuildYear
     NCodeBuildTimestamp
