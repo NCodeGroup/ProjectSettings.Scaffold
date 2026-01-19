@@ -12,7 +12,6 @@
     <copyright>Copyright © $year$ NCode Group</copyright>
 
     <projectUrl>https://github.com/NCodeGroup/$id$</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/NCodeGroup/$id$/master/NCodeGroup.png</iconUrl>
     <icon>NCodeGroup.png</icon>
     <readme>README.md</readme>
 
