@@ -2,6 +2,23 @@
 
 ## Test Project Conventions
 
+### Test File Location and Namespace
+
+Unit test files must mirror the folder structure and namespace of the code under test:
+
+- Test files go in the same relative folder path within the test project
+- Test namespace matches the production namespace with `.Tests` suffix
+
+```
+// Production code
+NCode.Mediator/Wrappers/CommandExceptionHandlerWrapper.cs
+namespace NCode.Mediator.Wrappers;
+
+// Test code
+NCode.Mediator.Tests/Wrappers/CommandExceptionHandlerWrapperTests.cs
+namespace NCode.Mediator.Tests.Wrappers;
+```
+
 ### Unit Test Style
 
 When writing or modifying unit tests in this project:
@@ -155,3 +172,41 @@ Region naming conventions:
 - Use `{MethodName} Tests` for method tests (e.g., `Dispose Tests`)
 - Use `{PropertyName} Property Tests` for property tests (e.g., `Span Property Tests`)
 - Use `Generic Type Tests` for tests verifying generic type parameter behavior
+
+### Moq Conventions
+
+All mock setups must use `.Verifiable()` at the end of the setup chain.
+
+Always use `x` as the lambda parameter name in Setup and Verify calls:
+
+```csharp
+// Preferred
+mockService
+    .Setup(x => x.DoSomething(It.IsAny<string>()))
+    .Returns("result")
+    .Verifiable();
+
+// Avoid
+mockService
+    .Setup(s => s.DoSomething(It.IsAny<string>()))
+    .Returns("result");
+```
+
+This ensures that mock setups are explicitly verified and makes tests more maintainable.
+
+### InternalsVisibleTo for Testing
+
+Projects under test should include `InternalsVisibleTo` attributes to enable mocking of internal types and members:
+
+```csharp
+// In Properties/AssemblyInfo.cs or a dedicated file
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
+[assembly: InternalsVisibleTo("ProjectName.Tests")]
+```
+
+- `DynamicProxyGenAssembly2` is required for Moq to create proxies for internal types
+- The test project name should match the actual test assembly name
+
+This allows unit tests to directly mock internal interfaces and virtual methods, enabling more thorough testing of implementation details.
