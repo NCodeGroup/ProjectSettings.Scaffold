@@ -17,6 +17,11 @@ csharp_wrap_before_declaration_lpar = false
 csharp_wrap_after_declaration_lpar = true
 csharp_wrap_before_declaration_rpar = true
 
+csharp_wrap_arguments_style = chop_if_long
+csharp_wrap_before_invocation_lpar = false
+csharp_wrap_after_invocation_lpar = true
+csharp_wrap_before_invocation_rpar = true
+
 csharp_place_method_attribute_on_same_line = never
 csharp_place_constructor_initializer_on_same_line = false
 csharp_wrap_before_first_type_parameter_constraint = true

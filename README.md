@@ -31,3 +31,4 @@ Contains common settings, scripts, and files to scaffold C# projects for NCodeGr
 * v1.0.18 - Remove PackageIconUrl msbuild property
 * v1.0.19 - Fix gitattributes for images
 * v1.0.20 - Disable XML doc for test projects
+* v1.0.21 - Added C# code style settings for parameter/argument wrapping and attribute placement
