@@ -1,3 +1,13 @@
+# Deprecated
+
+> **This package is retired. Use [NCodeGroup/project-template](https://github.com/NCodeGroup/project-template), which replaces it.**
+>
+> - It shipped shared MSBuild settings, `.editorconfig`, `.gitattributes`, code-style rules, `Directory.Build.props` and Copilot instructions into a project. The template does the same job, and also gives a project CI, Dependabot, central package management and the agent workflow, and keeps it current with template updates.
+> - To move a library off this package, run `Adopt-Project.ps1 -Path <the repository>` from a clone of the template. It removes the `NCode.ProjectSettings.Scaffold` reference, moves the package versions into `Directory.Packages.props`, and takes the build settings from `build/ProjectTemplate.props`.
+> - Already moved: Buffers, Base64Url, Collections.Providers, Mediator, NCode.Disposables, PropertyBag and Extensions.DataProtection.
+>
+> The NuGet package `NCode.ProjectSettings.Scaffold` is deprecated and this repository is archived. The code stays available as it is.
+
 [buildCrossTargeting]: https://github.com/Microsoft/msbuild/issues/1860
 [SPDX license]: https://github.com/NuGet/Home/wiki/Packaging-License-within-the-nupkg-(Technical-Spec)#license-expression-pack
 [NU5048]: https://aka.ms/deprecateIconUrl
