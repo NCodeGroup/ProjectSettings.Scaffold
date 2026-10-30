@@ -11,6 +11,9 @@ on:
   release:
     types: ["published"]
 
+permissions:
+  contents: read
+
 env:
   BUILD_CONFIGURATION: Release
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -48,6 +51,8 @@ jobs:
     if: github.event_name == 'release' && github.event.action == 'published' && github.event.release.tag_name
     needs: [build]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - name: Download artifacts
